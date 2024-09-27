@@ -21,8 +21,9 @@ public class MIssionSkill {
     @ManyToOne
     @JoinColumn(name = "id_mission")
     private MissionEntity mission;
+
     @ManyToOne
-    @JoinColumn(name = "id_skill",referencedColumnName = "id" )
+    @JoinColumn(name = "id_skill")
     private SkillEntity skill;
 
 }

@@ -21,8 +21,10 @@ public class SkillEntity {
 
     @Column(nullable = false)
     private String title;
+
     @Column(nullable = false)
     private String description;
+
     @OneToMany(mappedBy = "skill")
     private List<MIssionSkill> mIssionSkillList;
 

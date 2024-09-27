@@ -23,11 +23,16 @@ public class MissionEntity {
     private String title;
 
     private String description;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private MissionDifficulty difficulty;
+
     @OneToMany(mappedBy = "mission")
     private List<MIssionSkill> mIssionSkillList;
+
+    @OneToMany(mappedBy = "mission")
+    private List<UserMission> userMissions;
 
 
 }
