@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -24,4 +26,8 @@ public class MissionEntity {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private MissionDifficulty difficulty;
+    @OneToMany(mappedBy = "mission")
+    private List<MIssionSkill> mIssionSkillList;
+
+
 }
