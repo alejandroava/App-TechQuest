@@ -32,4 +32,5 @@ public class UserEntity {
     @OneToMany(mappedBy = "user")
     private List<StudentSkill> studentSkillList;
 
+
 }
