@@ -1,4 +1,4 @@
-package com.techquest.app_TechQuest.domain;
+package com.techquest.app_TechQuest.domain.model;
 
 import com.techquest.app_TechQuest.utils.Role;
 import jakarta.persistence.*;

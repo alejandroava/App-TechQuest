@@ -1,4 +1,4 @@
-package com.techquest.app_TechQuest.domain;
+package com.techquest.app_TechQuest.domain.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,18 +9,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
 @Getter
-@NoArgsConstructor
+@Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
-public class StudentSkill {
+public class UserMission {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
+    private MissionEntity mission;
+
     private UserEntity user;
 
-    private SkillEntity skill;
+
 }

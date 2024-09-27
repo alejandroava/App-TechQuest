@@ -1,5 +1,6 @@
-package com.techquest.app_TechQuest.domain;
+package com.techquest.app_TechQuest.domain.model;
 
+import com.techquest.app_TechQuest.utils.MissionDifficulty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,17 +9,19 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "skills")
-public class SkillEntity {
+@NoArgsConstructor
+@Entity(name = "missions")
+public class MissionEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(nullable = false)
     private String title;
-    @Column(nullable = false)
+
     private String description;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private MissionDifficulty difficulty;
 }
