@@ -1,9 +1,6 @@
 package com.techquest.app_TechQuest.domain.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +17,11 @@ public class StudentSkill {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "id_user")
     private UserEntity user;
 
+    @ManyToOne
+    @JoinColumn(name = "id_skill")
     private SkillEntity skill;
 }
