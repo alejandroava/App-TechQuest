@@ -1,6 +1,7 @@
 package com.techquest.app_TechQuest.application.service.impl;
 
 import com.techquest.app_TechQuest.application.dto.request.UserRegisterDTO;
+import com.techquest.app_TechQuest.application.mappers.AuthMapper;
 import com.techquest.app_TechQuest.application.service.IModel.IModelAuth;
 import com.techquest.app_TechQuest.domain.model.UserEntity;
 import com.techquest.app_TechQuest.infrastructure.persistence.AuthRepository;
@@ -13,6 +14,9 @@ public class AuthService implements IModelAuth {
     @Autowired
     AuthRepository authRepository;
 
+    @Autowired
+    AuthMapper authMapper;
+
     @Override
     public UserEntity registerUser(UserRegisterDTO userRegisterDTO) {
 
@@ -21,8 +25,8 @@ public class AuthService implements IModelAuth {
             throw new IllegalArgumentException("email exist");
         }
 
+        UserEntity user = authMapper.userRegisterDTOToUserEntity(userRegisterDTO);
 
-
-        return null;
+        return authRepository.save(user);
     }
 }
