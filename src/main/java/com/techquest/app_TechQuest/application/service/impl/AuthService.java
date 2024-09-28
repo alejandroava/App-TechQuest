@@ -5,6 +5,7 @@ import com.techquest.app_TechQuest.application.mappers.AuthMapper;
 import com.techquest.app_TechQuest.application.service.IModel.IModelAuth;
 import com.techquest.app_TechQuest.domain.model.UserEntity;
 import com.techquest.app_TechQuest.infrastructure.persistence.AuthRepository;
+import com.techquest.app_TechQuest.utils.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +18,9 @@ public class AuthService implements IModelAuth {
     @Autowired
     AuthMapper authMapper;
 
+
     @Override
-    public UserEntity registerUser(UserRegisterDTO userRegisterDTO) {
+    public UserEntity registerUser(UserRegisterDTO userRegisterDTO, Role role) {
 
         UserEntity userExist = authRepository.findByEmail(userRegisterDTO.getEmail());
         if(userExist != null){
@@ -26,6 +28,7 @@ public class AuthService implements IModelAuth {
         }
 
         UserEntity user = authMapper.userRegisterDTOToUserEntity(userRegisterDTO);
+        user.setRole(role);
 
         return authRepository.save(user);
     }

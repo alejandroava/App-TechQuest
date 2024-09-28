@@ -24,7 +24,7 @@ public class UserRegisterDTO {
     @NotBlank(message = "required password")
     private String password;
 
-    @NotBlank(message = "required role")
-    private Role role;
+//    @NotBlank(message = "required role")
+//    private Role role;
 
 }
