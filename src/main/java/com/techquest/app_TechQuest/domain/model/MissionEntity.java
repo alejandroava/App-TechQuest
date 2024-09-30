@@ -27,7 +27,7 @@ public class MissionEntity {
     private MissionDifficulty difficulty;
 
     @OneToMany(mappedBy = "mission")
-    private List<MIssionSkill> mIssionSkillList;
+    private List<MissionSkill> mIssionSkillList;
 
     @OneToMany(mappedBy = "mission")
     private List<UserMission> userMissions;

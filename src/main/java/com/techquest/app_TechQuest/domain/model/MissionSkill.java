@@ -1,10 +1,7 @@
 package com.techquest.app_TechQuest.domain.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 
 @Getter
@@ -12,7 +9,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class MIssionSkill {
+@Builder
+public class MissionSkill {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

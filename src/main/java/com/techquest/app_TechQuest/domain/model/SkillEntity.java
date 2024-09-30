@@ -26,7 +26,7 @@ public class SkillEntity {
     private String description;
 
     @OneToMany(mappedBy = "skill")
-    private List<MIssionSkill> mIssionSkillList;
+    private List<MissionSkill> mIssionSkillList;
 
     @OneToMany(mappedBy = "skill")
     private List<StudentSkill> studentSkillList;
