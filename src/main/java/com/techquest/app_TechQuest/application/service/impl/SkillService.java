@@ -17,7 +17,7 @@ public class SkillService implements IModelSkill {
     SkillMapper SkillMapper;
 
     @Override
-    public SkillEntity createSkill(AdminCreateSkillDTO adminCreateSkillDTO) {
+    public SkillEntity create(AdminCreateSkillDTO adminCreateSkillDTO) {
             SkillEntity skillExist = skillRepository.findByTitle(adminCreateSkillDTO.getTitle());
             if (skillExist != null){
                 throw new IllegalArgumentException("Skill exist");

@@ -30,7 +30,7 @@ public class StudentSkillService implements IModelStudentSkill {
 
 
     @Override
-    public StudentSkill createSkill(AssignSkillDTO assignSkillDTO) {
+    public StudentSkill create(AssignSkillDTO assignSkillDTO) {
 
         UserEntity studentExist = userRepository.findByEmail(assignSkillDTO.getEmailStudent());
 

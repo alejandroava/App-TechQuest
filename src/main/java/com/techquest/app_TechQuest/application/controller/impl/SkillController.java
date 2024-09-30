@@ -22,7 +22,7 @@ public class SkillController implements IModelSkill {
     @PostMapping("/admin/create")
     public ResponseEntity<?> create(@RequestBody @Valid AdminCreateSkillDTO adminCreateSkillDTO) {
         try{
-            return ResponseEntity.status(HttpStatus.CREATED).body(skillService.createSkill(adminCreateSkillDTO));
+            return ResponseEntity.status(HttpStatus.CREATED).body(skillService.create(adminCreateSkillDTO));
         }catch (IllegalArgumentException exception){
             ErrorSimple errorResponse = ErrorSimple.builder()
                     .code(HttpStatus.BAD_REQUEST.value())
