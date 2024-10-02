@@ -1,6 +1,8 @@
 package com.techquest.app_TechQuest.application.service.impl;
 
+import com.techquest.app_TechQuest.application.dto.request.LoginRequestDTO;
 import com.techquest.app_TechQuest.application.dto.request.UserRegisterDTO;
+import com.techquest.app_TechQuest.application.dto.response.LoginResponseDTO;
 import com.techquest.app_TechQuest.application.mappers.AuthMapper;
 import com.techquest.app_TechQuest.application.service.IModel.IModelAuth;
 import com.techquest.app_TechQuest.domain.model.UserEntity;
@@ -31,5 +33,12 @@ public class AuthService implements IModelAuth {
         user.setRole(role);
 
         return authRepository.save(user);
+    }
+
+    @Override
+    public LoginResponseDTO login(LoginRequestDTO loginRequestDTO) {
+        
+
+        return null;
     }
 }
