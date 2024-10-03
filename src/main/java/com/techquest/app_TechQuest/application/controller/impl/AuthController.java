@@ -2,7 +2,9 @@ package com.techquest.app_TechQuest.application.controller.impl;
 
 
 import com.techquest.app_TechQuest.application.controller.interfaces.IModelAuth;
+import com.techquest.app_TechQuest.application.dto.request.LoginRequestDTO;
 import com.techquest.app_TechQuest.application.dto.request.UserRegisterDTO;
+import com.techquest.app_TechQuest.application.dto.response.LoginResponseDTO;
 import com.techquest.app_TechQuest.application.exeptions.ErrorSimple;
 import com.techquest.app_TechQuest.application.service.impl.AuthService;
 import com.techquest.app_TechQuest.utils.Role;
@@ -73,4 +75,24 @@ public class AuthController implements IModelAuth {
                     .body(errorResponse);
         }
     }
+
+
+    @PostMapping("/login")
+    @Override
+    public ResponseEntity<?> login(@RequestBody @Valid LoginRequestDTO loginRequestDTO) {
+        try {
+            return ResponseEntity.ok(authService.login(loginRequestDTO));
+        }catch (RuntimeException exception){
+            ErrorSimple errorResponse = ErrorSimple.builder()
+                    .code(HttpStatus.BAD_REQUEST.value())
+                    .status(HttpStatus.BAD_REQUEST.getReasonPhrase())
+                    .message(exception.getMessage())
+                    .build();
+
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(errorResponse);
+        }
+    }
 }
+

@@ -1,12 +1,19 @@
 package com.techquest.app_TechQuest.application.service.impl;
 
+import com.techquest.app_TechQuest.application.dto.request.LoginRequestDTO;
 import com.techquest.app_TechQuest.application.dto.request.UserRegisterDTO;
+import com.techquest.app_TechQuest.application.dto.response.LoginResponseDTO;
 import com.techquest.app_TechQuest.application.mappers.AuthMapper;
 import com.techquest.app_TechQuest.application.service.IModel.IModelAuth;
 import com.techquest.app_TechQuest.domain.model.UserEntity;
+import com.techquest.app_TechQuest.infrastructure.helpers.JWTService;
 import com.techquest.app_TechQuest.infrastructure.persistence.AuthRepository;
 import com.techquest.app_TechQuest.utils.Role;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,6 +24,15 @@ public class AuthService implements IModelAuth {
 
     @Autowired
     AuthMapper authMapper;
+
+    @Autowired
+    AuthenticationManager authenticationManager;
+
+    @Autowired
+    JWTService jwtService;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
 
     @Override
@@ -29,7 +45,27 @@ public class AuthService implements IModelAuth {
 
         UserEntity user = authMapper.userRegisterDTOToUserEntity(userRegisterDTO);
         user.setRole(role);
+        user.setPassword(passwordEncoder.encode(userRegisterDTO.getPassword()));
 
         return authRepository.save(user);
+    }
+
+    @Override
+    public LoginResponseDTO login(LoginRequestDTO loginRequestDTO) {
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginRequestDTO.getEmail(), loginRequestDTO.getPassword());
+
+        Authentication authentication = authenticationManager.authenticate(authenticationToken);
+        if(authentication.isAuthenticated()){
+            UserEntity user = authRepository.findByEmail(loginRequestDTO.getEmail());
+            LoginResponseDTO loginResponseDTO = LoginResponseDTO.builder()
+                    .id(user.getId())
+                    .role(user.getRole())
+                    .token(jwtService.getToken(user))
+                    .build();
+
+            return loginResponseDTO;
+        }
+        throw new RuntimeException("failed");
+
     }
 }
