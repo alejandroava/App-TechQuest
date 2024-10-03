@@ -15,7 +15,7 @@ import java.util.Map;
 public class JWTService {
 
     //crear firma o clave secreta con base64
-    private final String SECRET_KEY = "bWljbGF2ZXNlY3JldGFuYWRpZWxhcHVlZGVzYWJlcg==";
+    private final String SECRET_KEY = "bWlzdXBlcmNsYXZlc2VjcmV0YW11eWxhcmdhcVkYWFkaXZpbmFyamFqYWphGFyYXF1ZW5hZGllbGFwdW";
 
     //Metodo para cifrar la clave secreta
     public SecretKey getKey(){

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,6 +31,9 @@ public class AuthService implements IModelAuth {
     @Autowired
     JWTService jwtService;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
 
     @Override
     public UserEntity registerUser(UserRegisterDTO userRegisterDTO, Role role) {
@@ -41,13 +45,16 @@ public class AuthService implements IModelAuth {
 
         UserEntity user = authMapper.userRegisterDTOToUserEntity(userRegisterDTO);
         user.setRole(role);
+        user.setPassword(passwordEncoder.encode(userRegisterDTO.getPassword()));
 
         return authRepository.save(user);
     }
 
     @Override
     public LoginResponseDTO login(LoginRequestDTO loginRequestDTO) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDTO.getEmail(), loginRequestDTO.getPassword()));
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginRequestDTO.getEmail(), loginRequestDTO.getPassword());
+
+        Authentication authentication = authenticationManager.authenticate(authenticationToken);
         if(authentication.isAuthenticated()){
             UserEntity user = authRepository.findByEmail(loginRequestDTO.getEmail());
             LoginResponseDTO loginResponseDTO = LoginResponseDTO.builder()

@@ -35,6 +35,7 @@ public class ApplicationConfig {
         return authentication.getAuthenticationManager();
     }
 
+    @Bean
     public AuthenticationProvider authenticationProvider (){
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
 
@@ -45,6 +46,7 @@ public class ApplicationConfig {
     }
 
     //Metodo para cargar los detalles del usuario mediante la autenticacion
+    @Bean
     public UserDetailsService userDetailsService() {
         return email -> {
             UserEntity user = userRepository.findByEmail(email);

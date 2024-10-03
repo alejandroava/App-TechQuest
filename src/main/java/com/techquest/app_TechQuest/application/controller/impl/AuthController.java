@@ -77,7 +77,7 @@ public class AuthController implements IModelAuth {
     }
 
 
-    @PostMapping(path = "/login")
+    @PostMapping("/login")
     @Override
     public ResponseEntity<?> login(@RequestBody @Valid LoginRequestDTO loginRequestDTO) {
         try {
