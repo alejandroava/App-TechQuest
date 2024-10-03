@@ -49,13 +49,16 @@ public class AuthService implements IModelAuth {
     public LoginResponseDTO login(LoginRequestDTO loginRequestDTO) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDTO.getEmail(), loginRequestDTO.getPassword()));
         if(authentication.isAuthenticated()){
+            UserEntity user = authRepository.findByEmail(loginRequestDTO.getEmail());
             LoginResponseDTO loginResponseDTO = LoginResponseDTO.builder()
-                    .id(authRepository.findByEmail(loginRequestDTO.getEmail()).getId())
-                    .role(authRepository.findByEmail(loginRequestDTO.getEmail()).getRole())
-                    .token(jwtService.getToken(loginRequestDTO))
-                    .build()
-        }
+                    .id(user.getId())
+                    .role(user.getRole())
+                    .token(jwtService.getToken(user))
+                    .build();
 
-        return null;
+            return loginResponseDTO;
+        }
+        throw new RuntimeException("failed");
+
     }
 }

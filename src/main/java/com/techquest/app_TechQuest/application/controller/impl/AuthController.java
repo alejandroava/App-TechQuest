@@ -77,9 +77,22 @@ public class AuthController implements IModelAuth {
     }
 
 
+    @PostMapping(path = "/login")
     @Override
-    public ResponseEntity<?> login(LoginRequestDTO loginRequestDTO) {
+    public ResponseEntity<?> login(@RequestBody @Valid LoginRequestDTO loginRequestDTO) {
+        try {
+            return ResponseEntity.ok(authService.login(loginRequestDTO));
+        }catch (RuntimeException exception){
+            ErrorSimple errorResponse = ErrorSimple.builder()
+                    .code(HttpStatus.BAD_REQUEST.value())
+                    .status(HttpStatus.BAD_REQUEST.getReasonPhrase())
+                    .message(exception.getMessage())
+                    .build();
 
-        return null;
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(errorResponse);
+        }
     }
 }
+
