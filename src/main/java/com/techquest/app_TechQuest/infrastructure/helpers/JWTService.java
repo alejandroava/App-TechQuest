@@ -1,15 +1,18 @@
 package com.techquest.app_TechQuest.infrastructure.helpers;
 
 import com.techquest.app_TechQuest.domain.model.UserEntity;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 @Component
 public class JWTService {
@@ -35,7 +38,7 @@ public class JWTService {
                 .compact();
     }
 
-    //Metodo para obtener el jwt
+    //Metodo para generar e inyectar los claims del jwt
 
     public String getToken(UserEntity user){
         Map<String,Object> claims = new HashMap<>();
@@ -44,5 +47,49 @@ public class JWTService {
 
         return getToken(claims,user);
     }
+
+    //Metodo para obtener los claims del token
+
+    public Claims extractAllClaims (String token){
+
+       return Jwts
+               .parserBuilder()
+               .setSigningKey(getKey())
+               .build()
+               .parseClaimsJwt(token)
+               .getBody();
+    }
+
+    //Obtiene todos los claims que se recibe y cn la funtion claimsResolver obtenngo solo el claim que nesecito
+    public <T> T getClaim(String token, Function<Claims,T> claimsResolver){
+
+        final Claims claims = extractAllClaims(token);
+
+        return claimsResolver.apply(claims);
+    }
+
+    //Obtiene el username del claim
+
+    public String getUsernameFromToken(String token){
+        return getClaim(token,Claims::getSubject);
+    }
+
+    //Obtiene la fecha de expiracion del claim
+    public Date getDateExpirationFromToken(String token){
+        return getClaim(token,Claims::getExpiration);
+    }
+
+    //Metodos para validar el token
+
+    public Boolean isTokenExpired(String token){
+        return getDateExpirationFromToken(token).before(new Date());
+    }
+
+//    public Boolean isTokenValid(String token, UserDetails userDetails){
+//        String email =
+//    }
+
+
+
 
 }
