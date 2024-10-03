@@ -1,21 +1,20 @@
 package com.techquest.app_TechQuest.application.dto.response;
 
+import com.techquest.app_TechQuest.utils.Role;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class LoginResponseDTO {
 
 
-    private String email;
+    private Long id ;
 
-    private String password;
+    private Role role;
 
     private String token;
 }
